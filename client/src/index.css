@@ -1,3 +1,23 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: 'Mona Sans';
+    src:
+      url('/fonts/Mona-Sans.woff2') format('woff2 supports variations'),
+      url('/fonts/Mona-Sans.woff2') format('woff2-variations');
+    
+  }
+.mono-medium{
+    font-weight: 500;
+    font-stretch: 100%;
+}
+.mono-light{
+    font-weight: 400;
+    font-stretch: 100%;
+}
+  html{
+    font-family: 'Mona Sans',sans-serif;
+  }
