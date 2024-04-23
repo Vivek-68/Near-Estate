@@ -9,6 +9,7 @@ export default {
       colors:{
         'lilac':'#6D63E8',
         'grey':'#9E9E9E',
+        'notwhite':'#FAFAFA',
       },
     },
   },
