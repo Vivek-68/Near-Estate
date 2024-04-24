@@ -16,7 +16,7 @@ const inactiveButton = 'p-2 md:p-4 px-6  border-2 border-b-0';
         <button onClick={()=>setFormData(prev => ({...prev,type:'buy'}))} name='buy' className={formData.type === 'buy'?activeButton:inactiveButton}>Buy</button>
         <button onClick={()=>setFormData(prev => ({...prev,type:'rent'}))} name='rent' className={formData.type === 'rent'?activeButton:inactiveButton}>Rent</button>
     </div>
-    <form  className='flex flex-col max-[767px]:gap-4 md:flex-row md:border-grey md:border-2 '>
+    <form  className='max-[500px]:w-[150%] flex flex-col max-[767px]:gap-4 md:flex-row md:border-grey md:border-2 md:gap-1'>
     <input onChange={handleChange}  value={formData.location} className='p-2 md:p-4 w-[100%] max-[767px]:border-2' type="text" name='location' placeholder='location'/>
     <input onChange={handleChange} value={formData.minPrice}  className='p-2 md:p-4 w-[100%] max-[767px]:border-2' type="number" name='minPrice' placeholder='Min Price' min={0} max={10000000}/>
     <input  onChange={handleChange} value={formData.maxPrice} className='p-2 md:p-4 w-[100%] max-[767px]:border-2' type="number" name='maxPrice' placeholder='Max Price' min={0} max={10000000}/>

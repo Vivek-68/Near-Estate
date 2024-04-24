@@ -1,13 +1,17 @@
 import React from 'react'
-import Navbar from './components/Navbar'
 import HomePage from './pages/HomePage'
+import Layout from './Layout'
+import { Routes , Route } from 'react-router-dom'
+import ListPage from './pages/ListPage'
 
 const App = () => {
   return (
-    <div className='max-w-[85rem] m-auto px-5 md:px-20 '>
-      <Navbar/>
-      <HomePage/>
-    </div>
+    <Routes>
+      <Route path='/' element = {<Layout/>} >
+        <Route index element={<HomePage/>} />
+        <Route path='/list' element={<ListPage/>} />
+      </Route>
+    </Routes>
   )
 }
 
