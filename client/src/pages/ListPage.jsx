@@ -6,7 +6,7 @@ import Card from '../components/Card.jsx'
 const ListPage = () => {
   return (
     <div>
-        <div className="md:w-[65%] flex flex-col gap-4 ">
+        <div className="lg:w-[65%] flex flex-col gap-4 ">
             <ListSearch/>
             {
                 listData.map((item) => <Card key={item.id} {...item}/>)
