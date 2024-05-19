@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom'
 
 const Card = ({title,img,price,address,bathroom,bedroom,latitude,longitude,id}) => {
   return (
-    <div className='h-[12rem] flex  gap-4'>
+    <div className='min-h-[12rem] gap-4 max-[600px]:flex-col max-[600px]:max-h-[20%] flex overflow-clip'>
       
-        <Link to={`/${id}`} className='w-[40%] object-cover'>
+        <Link to={`/${id}`} className='w-[40%] h-[100%] max-[600px]:w-[100%] object-contain'>
         <img src={img} alt='image failed to load' className='w-[100%] rounded-lg'/>
         </Link>
       
-        <div className='flex flex-col justify-between w-[60%]'>
-            <h2 className='mono-medium text-xl'>{title}</h2>
+        <div className='flex flex-col justify-between w-[60%] max-[600px]:w-[100%]'>
+            <h2 className='mono-medium  sm:text-xl '>{title}</h2>
             <p className='text-gray-500'>{address}</p>
             <p>{'$' + price}</p>
             <div>
