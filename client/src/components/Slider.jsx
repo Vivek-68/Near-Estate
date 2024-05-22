@@ -16,7 +16,7 @@ const Slider = ({images}) => {
     } )
   }
   return (
-    <div className='flex w-[100%] h-[350px] '>
+    <div className='flex w-[100%] h-[175px] min-[375px]:h-[225px] min-[600px]:h-[350px] z-[100000]'>
       {
         imageIndex !== null &&
       <div className='absolute top-0 left-0  w-screen  h-screen bg-black z-10000 '>
@@ -31,14 +31,17 @@ const Slider = ({images}) => {
        <div className='text-white absolute font-bold top-0 right-0 [font-size:clamp(.5rem,1vw+2rem,4rem);] p-4 pr-8 max-[450px]:pr-4 md:pr-16'><span className='cursor-pointer' onClick={()=>setImageIndex(null)}>X</span></div> 
       </div>
 }
-      <div className='flex-3 w-[73%] '>
-        <img onClick={()=> setImageIndex(0)} src={images[0]} className='rounded-md h-[100%]' alt='Could not load image' />
+    <div className='w-[100%] flex justify-between gap-2'>
+    <div className='flex w-[80%]'>
+        <img onClick={()=> setImageIndex(0)} src={images[0]} className='rounded-md w-[100%] ' alt='Could not load image' />
       </div>
-      <div className='flex flex-col flex-1 h-[100%] justify-between'>
+      <div className='flex flex-col  h-[100%] justify-between'>
         {
-          images.slice(1).map((image,i) => <img onClick={()=> setImageIndex(i+1)} src={image} className='h-[30%] rounded-md' key={nanoid(9)}/>)
+          images.slice(1).map((image,i) => <img onClick={()=> setImageIndex(i+1)} src={image} className='h-[30%]  rounded-md' key={nanoid(9)}/>)
         }
       </div>
+    </div>
+      
     </div>
     
   )
