@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [openMenu,setOpenMenu] = useState(false);
-  const user = true;
+  const user = null;
   return (
     <>
     <nav className='h-[7.5rem] hidden md:flex justify-between items-center max-[900px]:gap-6 '>
         <div className='flex justify-between  items-center lg:gap-12 min-[1200px]:gap-16 w-[65%] max-[900px]:text-[14px]'>
-            <a className='max-[900px]:hidden '><span className='text-4xl mono-medium text-lilac'>NearEstate</span></a>
+            <Link to='/' className='max-[900px]:hidden '><span className='text-4xl mono-medium text-lilac'>NearEstate</span></Link>
             <a className='line-height-[.5rem]'>Home</a>
             <a href="">About</a>
             <a href="">Contact</a>
@@ -30,8 +30,8 @@ const Navbar = () => {
           :
         <div className='flex justify-end items-center gap-8 lg:gap-16 w-[35%] max-[900px]:text-[14px]'>
         
-            <a href="#">Sign in</a>
-            <a href="#" className='text-white bg-lilac rounded-md px-4 py-2'>Sign up</a>
+            <Link to="/login">Sign in</Link>
+            <Link to="/register" className='text-white bg-lilac rounded-md px-4 py-2'>Sign up</Link>
           
         </div>
 }

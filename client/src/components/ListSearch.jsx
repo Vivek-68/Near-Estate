@@ -18,25 +18,30 @@ const ListSearch = () => {
           <label className='text-[.75rem] text-gray-700' htmlFor="property">Property</label>
           <select className='p-2 pl-2 pr-[2.3vw] bg-white border-2' name="property" id="property">
             <option value="any">any</option>
-            <option value="buy">buy</option>
-            <option value="rent">rent</option>
+            <option value="apartment">Apartment</option>
+            <option value="condo">Condo</option>
+            <option value="land">Land</option>
           </select>
           </div>
           <div className='flex flex-col'>
           <label className='text-[.75rem] text-gray-700' htmlFor="minPrice">Min Price</label>
-          <select className='p-2 pl-2 pr-[2.3vw] bg-white border-2' name="minPrice" id="minPrice">
-            <option value="any">any</option>
-            <option value="buy">buy</option>
-            <option value="rent">rent</option>
-          </select>
+          <input
+          className='border-2 w-24 py-[6px] bg-white placeholder-black pl-2'
+            type="number"
+            id="minPrice"
+            name="minPrice"
+            placeholder="any"
+          />
           </div>
           <div className='flex flex-col'>
           <label className='text-[.75rem] text-gray-700' htmlFor="maxPrice">Max Price</label>
-          <select className='p-2 pl-2 pr-[2.3vw] bg-white border-2' name="maxPrice" id="maxPrice">
-            <option value="any">any</option>
-            <option value="buy">buy</option>
-            <option value="rent">rent</option>
-          </select>
+          <input
+          className='border-2 w-24 py-[6px] bg-white placeholder-black pl-2'
+            type="number"
+            id="minPrice"
+            name="minPrice"
+            placeholder="any"
+          />
           </div>
           <div className='flex flex-col'>
           <label className='text-[.75rem] text-gray-700' htmlFor="bedroom">Bedroom</label>
