@@ -1,10 +1,15 @@
 import { useState } from "react";
 import axios from "axios";
+import apiRequest from "../lib/apiRequest.js";
+import {useNavigate} from "react-router-dom"
 
 export default function RegisterPage() {
   const [form,setForm] = useState({
     email:'',username:'',password:''
   })
+  const [error,setError] = useState("");
+  const navigate = useNavigate();
+  
   const handleChange = (e) =>{
     setForm(prev => ({...prev,[e.target.name]:e.target.value}))
   }
@@ -12,9 +17,16 @@ export default function RegisterPage() {
     const handleSubmit = async(e) =>{
         e.preventDefault();
         try {
-          
+          const response = await apiRequest.post('/auth/register',form);
+          setError("")
+          navigate('/login');
         } catch (error) {
-          
+          console.log(error);
+          if(error.response)
+          setError(error.response.data?.message);
+          else{
+            setError(error.message);
+          }
         }
     }
     return (
@@ -93,6 +105,9 @@ export default function RegisterPage() {
                 </button>
               </div>
             </form>
+            {
+              error && <p className="text-red-500 mt-2">{error}</p>
+            }
 
           </div>
         </div>

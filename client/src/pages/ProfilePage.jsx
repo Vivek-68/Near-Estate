@@ -1,12 +1,24 @@
 import React, { useState } from 'react'
-import { userData,listData } from '../lib/dummydata'
+import { userData,listData } from '../lib/dummydata.js'
 import Card from '../components/Card'
+import apiRequest from '../lib/apiRequest.js';
+import { useNavigate } from 'react-router-dom';
 
 const ProfilePage = () => {
     const [chat,setChat] = useState(true);
+    const navigate = useNavigate();
+    const handleClick = async() =>{
+        try {
+            const response = await apiRequest.delete("/auth/logout");
+            navigate('/login')
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     const openChatboxStyle = 'flex flex-col gap-4 max-[1023px]:max-h-[400px] lg:h-[45%] overflow-y-auto';
     const closedChatboxStyle = 'flex flex-col gap-4 max-[1023px]:max-h-[600px] lg:h-[100%] overflow-y-auto'
-    
+
 
   return (
     <div className='max-[768px]:pt-[5rem] max-[500px]:pt-[3.5rem] lg:flex lg:h-[85vh] pb-8 lg:pb-0'>
@@ -19,6 +31,7 @@ const ProfilePage = () => {
                 <span className=' flex gap-4 items-center'>Avatar : <img src={userData.img} className='h-[2.25rem] w-[2.25rem] rounded-full object-cover' alt="Could not load image" /></span>
                 <span >Username:  <span className='m-4'>{userData.name}</span></span>
                 <span >Email:  <span className='m-4'>{'john2123@gmail.com'}</span></span>
+                <button onClick={handleClick} className='px-2 py-1.5 sm:px-4 text-[14px] sm:text-[1rem] w-[5rem] sm:w-[7.5rem] sm:py-3 rounded-md text-white bg-lilac'>Logout</button>
             </div>
             <div className='flex justify-between items-center mt-4'>
             <h2 className='min-[450px]:text-3xl text-2xl font-semibold'>My List</h2>

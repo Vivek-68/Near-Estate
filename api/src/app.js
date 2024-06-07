@@ -16,13 +16,13 @@ app.use(cors(
         credentials:true
     }
 ))
+app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({extended:true}))
-app.use(express.json());
 app.use('/api/auth',authRouter)
 
 app.use((err,req,res,next) =>{
-    return res.status(err.statusCode).json({
+    return res.status(err.statusCode || 500).json({
         message:err.message
     })
 })

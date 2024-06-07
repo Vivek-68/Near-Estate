@@ -1,15 +1,32 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import apiRequest from "../lib/apiRequest.js";
 
 export default function LoginPage() {
 
   const [form,setForm] = useState({
     email:'',password:''
   })
+  const [error,setError] = useState();
+  const navigate = useNavigate();
   const handleChange = (e) =>{
     setForm(prev => ({...prev,[e.target.name]:e.target.value}))
   }
-    const handleSubmit = async() =>{
-        
+    const handleSubmit = async(e) =>{
+      e.preventDefault();
+        try{
+          const response = await apiRequest.post('/auth/login',form);
+          setError("");
+          navigate("/");
+        }
+        catch(err){
+          console.log(err);
+          if(err.response)
+          setError(err.response.data?.message);
+          else{
+            setError(err.message);
+          }
+        }
     }
     return (
       <>
@@ -71,6 +88,9 @@ export default function LoginPage() {
                 </button>
               </div>
             </form>
+            {
+              error && <p className="text-red-500 mt-2">{error}</p>
+            }
 
           </div>
         </div>
