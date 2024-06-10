@@ -1,6 +1,7 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import apiRequest from "../lib/apiRequest.js";
+import { AuthContext } from "../context/AuthContext.jsx";
 
 export default function LoginPage() {
 
@@ -8,6 +9,7 @@ export default function LoginPage() {
     email:'',password:''
   })
   const [error,setError] = useState();
+  const {updateUser} = useContext(AuthContext);
   const navigate = useNavigate();
   const handleChange = (e) =>{
     setForm(prev => ({...prev,[e.target.name]:e.target.value}))
@@ -16,6 +18,7 @@ export default function LoginPage() {
       e.preventDefault();
         try{
           const response = await apiRequest.post('/auth/login',form);
+          updateUser(JSON.stringify(response.data.data));
           setError("");
           navigate("/");
         }

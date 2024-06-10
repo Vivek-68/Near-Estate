@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
-import { userData } from '../lib/dummydata';
+import React, { useContext, useState } from 'react'
+import { userData } from '../lib/dummydata.js';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 const Navbar = () => {
   const [openMenu,setOpenMenu] = useState(false);
-  const user = null;
+  const {currentUser} = useContext(AuthContext);
   return (
     <>
     <nav className='h-[7.5rem] hidden md:flex justify-between items-center max-[900px]:gap-6 '>
@@ -16,12 +17,12 @@ const Navbar = () => {
             <a href="">Agents</a>
         </div>
         {
-          user?
+          currentUser?
           <div className='flex justify-end items-center gap-6 lg:gap-8 w-[35%] max-[900px]:text-[14px] ml-3'>
         
             <Link className='flex items-center gap-2' to= '/profile'>
-            <img className='h-[2.5rem] w-[2.5rem] object-cover rounded-full' src={userData.img} alt="Could not load image" />
-            <p className='font-semibold'>{userData.name}</p>
+            <img className='h-[2.5rem] w-[2.5rem] object-cover rounded-full' src={currentUser?.avatar || '/icons/noavatar.jpg'} alt="Could not load image" />
+            <p className='font-semibold'>{currentUser?.username}</p>
             </Link>
             <Link to="/profile" className='text-white bg-lilac rounded-md px-4 py-2'>Profile</Link>
             <span className='w-[1.5rem] h-[1.5rem]  text-center rounded-full text-white bg-red-500 relative bottom-4 right-9 lg:right-12'>3</span>

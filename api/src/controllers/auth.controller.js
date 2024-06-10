@@ -80,6 +80,7 @@ const loginUser = asyncHandler(async(req,res)=>{
         httpOnly:true
     }
     const loggedInUser = exclude(user,['password']);
+    console.log(loggedInUser)
     res.status(200).cookie("token",token,options).json(
         new ApiResponse("User logged in successfully",200,loggedInUser)
     );

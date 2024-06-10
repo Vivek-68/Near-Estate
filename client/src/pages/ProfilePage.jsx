@@ -1,15 +1,18 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { userData,listData } from '../lib/dummydata.js'
 import Card from '../components/Card'
 import apiRequest from '../lib/apiRequest.js';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext.jsx';
 
 const ProfilePage = () => {
     const [chat,setChat] = useState(true);
     const navigate = useNavigate();
+    const {currentUser,updateUser} = useContext(AuthContext);
     const handleClick = async() =>{
         try {
             const response = await apiRequest.delete("/auth/logout");
+            updateUser(null);
             navigate('/login')
         } catch (error) {
             console.log(error);
@@ -28,9 +31,9 @@ const ProfilePage = () => {
                 <button className='px-2 py-1.5 sm:px-4 text-[14px] sm:text-[1rem] sm:py-3 rounded-md text-white bg-lilac'>Update Profile</button>
             </div>
             <div className=' flex flex-col pt-4 gap-4'>
-                <span className=' flex gap-4 items-center'>Avatar : <img src={userData.img} className='h-[2.25rem] w-[2.25rem] rounded-full object-cover' alt="Could not load image" /></span>
-                <span >Username:  <span className='m-4'>{userData.name}</span></span>
-                <span >Email:  <span className='m-4'>{'john2123@gmail.com'}</span></span>
+                <span className=' flex gap-4 items-center'>Avatar : <img src={currentUser?.avatar || '/icons/noavatar.jpg'} className='h-[2.25rem] w-[2.25rem] rounded-full object-cover' alt="Could not load image" /></span>
+                <span >Username:  <span className='m-4'>{currentUser?.username}</span></span>
+                <span >Email:  <span className='m-4'>{currentUser?.email}</span></span>
                 <button onClick={handleClick} className='px-2 py-1.5 sm:px-4 text-[14px] sm:text-[1rem] w-[5rem] sm:w-[7.5rem] sm:py-3 rounded-md text-white bg-lilac'>Logout</button>
             </div>
             <div className='flex justify-between items-center mt-4'>
@@ -39,7 +42,7 @@ const ProfilePage = () => {
             </div>
             <div className='flex flex-col gap-4 md:h-[60vh] overflow-y-auto pt-4'>
             {
-                listData.map((item) => <div className='max-h-[20rem]'><Card key={item.id} {...item}/></div>)
+                listData.map((item) => <div key={item.id} className='max-h-[20rem]'><Card  {...item}/></div>)
             }
             </div>
             
