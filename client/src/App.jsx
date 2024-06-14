@@ -8,6 +8,7 @@ import ProfilePage from './pages/ProfilePage'
 import RegisterPage from './pages/RegisterPage'
 import LoginPage from './pages/LoginPage'
 import RequireAuth from './RequireAuth'
+import UpdateProfile from './pages/UpdateProfile'
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
       </Route>
       <Route path='/' element= {<RequireAuth/>}>
         <Route path='/profile' element = {<ProfilePage/>} />
+        <Route path='/profile/update' element = {<UpdateProfile/>} />
       </Route>
     </Routes>
   )

@@ -58,6 +58,9 @@ const registerUser = asyncHandler(async(req,res)=>{
 
 const loginUser = asyncHandler(async(req,res)=>{
     const {email,password} = req.body;
+    if(!email || !password){
+        throw new ApiError(400,"Fields cannot be empty");
+    }
     const user = await prisma.user.findUnique({
         where:{
             email:email
@@ -71,8 +74,7 @@ const loginUser = asyncHandler(async(req,res)=>{
         throw new ApiError(401,"Password is incorrect!");
     }
     const token = jwt.sign({
-        id:user.id,
-        username:user.username
+        id:user.id
     },process.env.JWT_SECRET,{
         expiresIn:'30d'
     });

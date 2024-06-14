@@ -1,33 +1,35 @@
-import { useContext, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useContext, useState } from "react";
+import axios from "axios";
 import apiRequest from "../lib/apiRequest.js";
+import {useNavigate} from "react-router-dom"
 import { AuthContext } from "../context/AuthContext.jsx";
 
-export default function LoginPage() {
-
-  const [form,setForm] = useState({
-    email:'',password:''
+export default function UpdateProfile() {
+const {currentUser,updateUser} = useContext(AuthContext);
+const [form,setForm] = useState({
+    email:currentUser?.email,username:currentUser?.username,password:''
   })
-  const [error,setError] = useState();
-  const {updateUser} = useContext(AuthContext);
+  const [error,setError] = useState("");
   const navigate = useNavigate();
   const handleChange = (e) =>{
     setForm(prev => ({...prev,[e.target.name]:e.target.value}))
   }
+console.log(currentUser)
     const handleSubmit = async(e) =>{
-      e.preventDefault();
-        try{
-          const response = await apiRequest.post('/auth/login',form);
+        e.preventDefault();
+        try {
+          const response = await apiRequest.put(`/users/update/${currentUser.id}`,form);
           updateUser(JSON.stringify(response.data.data));
-          setError("");
-          navigate("/");
-        }
-        catch(err){
-          console.log(err);
-          if(err.response)
-          setError(err.response.data?.message);
+          setError("")
+          navigate('/profile');
+        } catch (error) {
+          
+          console.log(error);
+          
+          if(error.response)
+          setError(error.response.data?.message);
           else{
-            setError(err.message);
+            setError(error.message);
           }
         }
     }
@@ -36,7 +38,7 @@ export default function LoginPage() {
         <div className="flex flex-1 flex-col justify-center px-6 py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-              Login to your account
+              Update your details
             </h2>
           </div>
   
@@ -59,7 +61,23 @@ export default function LoginPage() {
                   />
                 </div>
               </div>
-              
+              <div>
+                <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
+                  Username
+                </label>
+                <div className="mt-2">
+                  <input
+                    id="username"
+                    name="username"
+                    type="text"
+                    value={form.username}
+                    onChange={handleChange}
+                    autoComplete="username"
+                    required
+                    className="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
   
               <div>
                 <div className="flex items-center justify-between">
@@ -76,7 +94,6 @@ export default function LoginPage() {
                     value={form.password}
                     onChange={handleChange}
                     autoComplete="current-password"
-                    required
                     className="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -87,7 +104,7 @@ export default function LoginPage() {
                   type="submit"
                   className="flex w-full justify-center rounded-md bg-lilac px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
-                  Login
+                  Update
                 </button>
               </div>
             </form>

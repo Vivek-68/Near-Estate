@@ -1,5 +1,6 @@
 import express from "express";
 import authRouter from "./routes/auth.route.js";
+import userRouter from "./routes/user.route.js";
 import dotenv from "dotenv";
 import cors from "cors"
 import cookieParser from "cookie-parser";
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({extended:true}))
 app.use('/api/auth',authRouter)
+app.use('/api/users',userRouter)
 
 app.use((err,req,res,next) =>{
     return res.status(err.statusCode || 500).json({

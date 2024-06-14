@@ -4,6 +4,7 @@ import Card from '../components/Card'
 import apiRequest from '../lib/apiRequest.js';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext.jsx';
+import { Link } from 'react-router-dom';
 
 const ProfilePage = () => {
     const [chat,setChat] = useState(true);
@@ -28,7 +29,7 @@ const ProfilePage = () => {
         <div className='lg:w-[65%] md:pr-8 mb-8'>
             <div className='flex justify-between items-center gap-2'>
                 <h2 className='min-[450px]:text-3xl text-2xl font-semibold'>User Information</h2>
-                <button className='px-2 py-1.5 sm:px-4 text-[14px] sm:text-[1rem] sm:py-3 rounded-md text-white bg-lilac'>Update Profile</button>
+                <Link to='/profile/update' className='px-2 py-1.5 sm:px-4 text-[14px] sm:text-[1rem] sm:py-3 rounded-md text-white bg-lilac'>Update Profile</Link>
             </div>
             <div className=' flex flex-col pt-4 gap-4'>
                 <span className=' flex gap-4 items-center'>Avatar : <img src={currentUser?.avatar || '/icons/noavatar.jpg'} className='h-[2.25rem] w-[2.25rem] rounded-full object-cover' alt="Could not load image" /></span>
