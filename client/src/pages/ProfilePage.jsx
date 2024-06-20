@@ -2,11 +2,13 @@ import React, { useContext, useState } from 'react'
 import { userData,listData } from '../lib/dummydata.js'
 import Card from '../components/Card'
 import apiRequest from '../lib/apiRequest.js';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext.jsx';
 import { Link } from 'react-router-dom';
 
 const ProfilePage = () => {
+    
     const [chat,setChat] = useState(true);
     const navigate = useNavigate();
     const {currentUser,updateUser} = useContext(AuthContext);

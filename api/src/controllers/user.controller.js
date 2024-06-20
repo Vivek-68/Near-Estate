@@ -39,7 +39,7 @@ const updateUser = asyncHandler(async(req,res)=>{
     if(id !== userId){
         throw new ApiError(403,"Unauthorized Access!");
     }
-    const {email,username,password} = req.body;
+    const {email,username,password,avatar} = req.body;
     if([email,username].some(field => field.trim()==="")){
         throw new ApiError(400,"Invalid credentials!");
     }
@@ -68,7 +68,8 @@ const updateUser = asyncHandler(async(req,res)=>{
             id:id
         },
         data:{
-            username,email,...(hashedPassword && {password:hashedPassword})
+            username,email,...(hashedPassword && {password:hashedPassword}),
+            ...(avatar && {avatar}),
         }
     });
     if(!updatedUser){

@@ -82,7 +82,6 @@ const loginUser = asyncHandler(async(req,res)=>{
         httpOnly:true
     }
     const loggedInUser = exclude(user,['password']);
-    console.log(loggedInUser)
     res.status(200).cookie("token",token,options).json(
         new ApiResponse("User logged in successfully",200,loggedInUser)
     );
@@ -93,6 +92,7 @@ const logout = asyncHandler(async(req,res)=>{
     const options = {
         httpOnly:true
     };
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     res.status(200).clearCookie("token",options)
     .json(
         new ApiResponse("User logged out successfully!",200)

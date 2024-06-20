@@ -3,29 +3,28 @@ import axios from "axios";
 import apiRequest from "../lib/apiRequest.js";
 import {useNavigate} from "react-router-dom"
 import { AuthContext } from "../context/AuthContext.jsx";
+import UploadWidget from "../components/UploadWidget.jsx";
 
 export default function UpdateProfile() {
 const {currentUser,updateUser} = useContext(AuthContext);
 const [form,setForm] = useState({
-    email:currentUser?.email,username:currentUser?.username,password:''
+    email:currentUser?.email,username:currentUser?.username,password:'',avatar:currentUser?.avatar
   })
   const [error,setError] = useState("");
   const navigate = useNavigate();
   const handleChange = (e) =>{
     setForm(prev => ({...prev,[e.target.name]:e.target.value}))
   }
-console.log(currentUser)
-    const handleSubmit = async(e) =>{
+
+    const handleClick = async(e) =>{
         e.preventDefault();
         try {
           const response = await apiRequest.put(`/users/update/${currentUser.id}`,form);
-          updateUser(JSON.stringify(response.data.data));
+          updateUser(JSON.stringify(response.data.data))
           setError("")
           navigate('/profile');
         } catch (error) {
-          
           console.log(error);
-          
           if(error.response)
           setError(error.response.data?.message);
           else{
@@ -43,7 +42,7 @@ console.log(currentUser)
           </div>
   
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form className="space-y-6" onSubmit={handleSubmit}>
+            <form className="space-y-6">
               <div>
                 <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                   Email address
@@ -98,13 +97,26 @@ console.log(currentUser)
                   />
                 </div>
               </div>
+              <div className="mt-2">
+              <UploadWidget setForm={setForm} uwConfig={
+                {
+                  cloudName:'dachq7dm8',
+                  uploadPreset:'estate',
+                  multiple:false,
+                  maxImageFileSize:4000000,
+                  folder:'avatars'
+                }
+                
+              } 
+              />
+              </div>
   
               <div>
                 <button
-                  type="submit"
+                  onClick={handleClick}
                   className="flex w-full justify-center rounded-md bg-lilac px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
-                  Update
+                  Register
                 </button>
               </div>
             </form>
