@@ -4,7 +4,21 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import {prisma ,exclude}from "../lib/prisma.js";
 
 const getPosts = asyncHandler(async(req,res)=>{
-    const posts = await prisma.post.findMany();
+    const query = req.query;
+    console.log(query)
+    const posts = await prisma.post.findMany({
+        where:{
+            city: query.city || undefined,
+            type: query.type || undefined,
+            property: query.property || undefined,
+            bedrooms:parseInt(query.bedrooms) || undefined,
+            price:{
+                gte : parseInt(query.minPrice) || 0,
+                lte : parseInt(query.maxPrice) || 10000000
+            }
+        }
+    });
+    console.log(posts)
     res.status(200).json(
         new ApiResponse("Posts fetched successafully",200,posts)
     )

@@ -35,7 +35,9 @@ function UploadWidget({ uwConfig, setPublicId,setForm }) {
            
             console.log("Done! Here is the image info: ", result.info);
             //setPublicId(result.info.public_id);
-            setForm(prev => ({...prev,'avatar':result.info.secure_url}));
+            //setForm(prev => ({...prev,'avatar':result.info.secure_url}));
+            setForm(prev => ([...prev,result.info.secure_url]));
+            
             
           }
         }

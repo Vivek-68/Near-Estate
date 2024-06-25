@@ -41,7 +41,7 @@ const ProfilePage = () => {
             </div>
             <div className='flex justify-between items-center mt-4'>
             <h2 className='min-[450px]:text-3xl text-2xl font-semibold'>My List</h2>
-            <button className='px-2 py-1.5 sm:px-4 text-[14px] sm:text-[1rem] sm:py-3 rounded-md text-white bg-lilac'>Add New Post</button>
+            <Link to='/add'><button className='px-2 py-1.5 sm:px-4 text-[14px] sm:text-[1rem] sm:py-3 rounded-md text-white bg-lilac'>Add New Post</button></Link>
             </div>
             <div className='flex flex-col gap-4 md:h-[60vh] overflow-y-auto pt-4'>
             {

@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import apiRequest from "../lib/apiRequest.js";
 import {useNavigate} from "react-router-dom"
@@ -8,8 +8,18 @@ import UploadWidget from "../components/UploadWidget.jsx";
 export default function UpdateProfile() {
 const {currentUser,updateUser} = useContext(AuthContext);
 const [form,setForm] = useState({
-    email:currentUser?.email,username:currentUser?.username,password:'',avatar:currentUser?.avatar
+    email:currentUser?.email,username:currentUser?.username,password:''
   })
+ const [avatar,setAvatar] = useState([]) 
+ useEffect(()=>{
+  if(currentUser?.avatar){
+    setAvatar(currentUser.avatar);
+  }
+  else{
+    setAvatar('icons/noavatar.jpg');
+  }
+ },[]);
+ 
   const [error,setError] = useState("");
   const navigate = useNavigate();
   const handleChange = (e) =>{
@@ -19,7 +29,7 @@ const [form,setForm] = useState({
     const handleClick = async(e) =>{
         e.preventDefault();
         try {
-          const response = await apiRequest.put(`/users/update/${currentUser.id}`,form);
+          const response = await apiRequest.put(`/users/update/${currentUser.id}`,{...form,avatar:avatar[0]});
           updateUser(JSON.stringify(response.data.data))
           setError("")
           navigate('/profile');
@@ -98,7 +108,7 @@ const [form,setForm] = useState({
                 </div>
               </div>
               <div className="mt-2">
-              <UploadWidget setForm={setForm} uwConfig={
+              <UploadWidget setForm={setAvatar} uwConfig={
                 {
                   cloudName:'dachq7dm8',
                   uploadPreset:'estate',

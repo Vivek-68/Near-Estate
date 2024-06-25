@@ -26,12 +26,12 @@ model User {
 model Post{
   id String @id @default(auto()) @map("_id") @db.ObjectId
   title String
-  price String
+  price Int
   images String[]
   address String
   city String
-  bedroom Int
-  bathroom Int
+  bedrooms Int
+  bathrooms Int
   latitude String
   longitude String
   type Type
@@ -58,10 +58,12 @@ model PostDetail {
 }
 
 enum Type{
+  any
   buy 
   rent
 }
 enum Property{
+  any
   apartment
   house
   condo
