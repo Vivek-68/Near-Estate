@@ -98,4 +98,33 @@ const deleteUser = asyncHandler(async(req,res)=>{
     );
 });
 
-export {getUser,getUsers,updateUser,deleteUser};
+const getUserPosts = asyncHandler(async(req,res)=>{
+    const userId = req.user?.id;
+    const posts = await prisma.post.findMany({
+        where:{
+            userId:userId
+        }
+    });
+    return res.status(200).json(
+        new ApiResponse("User's posts fetched successfully!",200,posts)
+    );
+})
+
+const getSavedPosts = asyncHandler(async(req,res)=>{
+    const userId = req.user?.id;
+    const savedPosts = await prisma.savedPost.findMany({
+        where:{
+            userId:userId
+        },
+        include:{
+            post:true
+        }
+    });
+    const posts = savedPosts.map(item => item.post);
+    return res.status(200).json(
+        new ApiResponse("Saved posts fetched successfully",200,posts)
+    );
+
+})
+
+export {getUser,getUsers,updateUser,deleteUser,getUserPosts,getSavedPosts};

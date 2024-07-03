@@ -3,12 +3,12 @@ import { userData,listData } from '../lib/dummydata.js'
 import Card from '../components/Card'
 import apiRequest from '../lib/apiRequest.js';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext.jsx';
 import { Link } from 'react-router-dom';
 
 const ProfilePage = () => {
-    
+    const {posts,saved} = useLoaderData()
     const [chat,setChat] = useState(true);
     const navigate = useNavigate();
     const {currentUser,updateUser} = useContext(AuthContext);
@@ -28,7 +28,7 @@ const ProfilePage = () => {
 
   return (
     <div className='max-[768px]:pt-[5rem] max-[500px]:pt-[3.5rem] lg:flex lg:h-[85vh] pb-8 lg:pb-0'>
-        <div className='lg:w-[65%] md:pr-8 mb-8'>
+        <div className='lg:w-[65%] md:pr-8 mb-8 overflow-y-auto'>
             <div className='flex justify-between items-center gap-2'>
                 <h2 className='min-[450px]:text-3xl text-2xl font-semibold'>User Information</h2>
                 <Link to='/profile/update' className='px-2 py-1.5 sm:px-4 text-[14px] sm:text-[1rem] sm:py-3 rounded-md text-white bg-lilac'>Update Profile</Link>
@@ -43,11 +43,18 @@ const ProfilePage = () => {
             <h2 className='min-[450px]:text-3xl text-2xl font-semibold'>My List</h2>
             <Link to='/add'><button className='px-2 py-1.5 sm:px-4 text-[14px] sm:text-[1rem] sm:py-3 rounded-md text-white bg-lilac'>Add New Post</button></Link>
             </div>
-            <div className='flex flex-col gap-4 md:h-[60vh] overflow-y-auto pt-4'>
+            <div className='flex flex-col gap-4 md:h-[60vh] pt-4'>
             {
-                listData.map((item) => <div key={item.id} className='max-h-[20rem]'><Card  {...item}/></div>)
+                posts && posts.map((item) => <div key={item.id} className='max-h-[20rem]'><Card  {...item}/></div>)
             }
+             <h2 className='min-[450px]:text-3xl text-2xl font-semibold'>Saved List</h2>
+            {
+               saved && saved.map((item) => <div key={item.id} className='max-h-[20rem]'><Card  {...item}/></div>)
+            }
+
             </div>
+           
+            
             
         </div>
         <div className='lg:w-[35%] px-6 bg-[#FFE6E6]  max-[1023px]:max-h-[1000px] lg:h-[100%] pt-4 pb-4'>

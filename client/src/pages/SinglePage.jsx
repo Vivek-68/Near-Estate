@@ -1,13 +1,30 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import Slider from '../components/Slider'
 import { singlePostData,userData } from '../lib/dummydata'
 import Map from '../components/Map'
-import {useLoaderData} from "react-router-dom"
+import {useLoaderData, useNavigate} from "react-router-dom"
 import DOMPurify from "dompurify"
+import { AuthContext } from '../context/AuthContext'
+import apiRequest from "../lib/apiRequest"
 
 const SinglePage = () => {
   const post = useLoaderData();
-  console.log(post);
+  const [saved,setSaved] = useState(post.isSaved);
+  const {currentUser} = useContext(AuthContext);
+  const navigate = useNavigate();
+  const handleSave = async(e) =>{
+    if(!currentUser){
+     return navigate('/login');
+    }
+    try{
+      await apiRequest.post('/posts/save',{postId:post?.id});
+      setSaved(prev => !prev)
+    }
+    catch(error){
+      console.log(error);
+    }
+  }
+
     return (
     <div className='lg:h-[85%] max-[767px]:pt-16 flex max-[1200px]:flex-col max-[1200px]:overflow-y-auto gap-8 pb-8'>
         <div className='min-[1201px]:w-[65%] flex flex-col min-[1201px]:last:overflow-y-auto gap-6'>
@@ -18,7 +35,7 @@ const SinglePage = () => {
             <div className='flex text-gray-500'><img src="/icons/pin.png" className='h-[1.5rem]' alt="Could not load image" /> <p>{post?.address}</p></div>
             <p className='text-2xl'>${post?.price}</p>
           </div>
-          <div className='flex flex-col p-4 items-center bg-[#FFE6E6] rounded-lg'>
+          <div className='flex flex-col p-4 items-center bg-indigo-100 rounded-lg'>
             <img className='h-[3rem] w-[3rem] object-cover rounded-full' src={post?.user?.avatar || 'icons/noavatar.jpg'} alt="" />
             <p className='text-xl '>{post?.user?.username}</p>
           </div>
@@ -27,7 +44,7 @@ const SinglePage = () => {
         </div>
 
         
-        <div className='min-[1201px]:w-[35%] flex flex-col  justify-between min-[1201px]:overflow-y-auto rounded-lg p-4 bg-[#FFE6E6]'>
+        <div className='min-[1201px]:w-[35%] flex flex-col  justify-between min-[1201px]:overflow-y-auto rounded-lg p-4 bg-indigo-200 '>
         <div className='flex flex-col gap-2 '>
           <h2 className='text-xl font-semibold'>General</h2>
           <div className='p-4 bg-white'>
@@ -97,7 +114,7 @@ const SinglePage = () => {
           </div>
           <div className="flex max-[350px]:flex-col gap-4 justify-between">
             <button className='bg-white min-[450px]:p-4 p-2'>Send a Message</button>
-            <button className='bg-white min-[450px]:p-4 p-2'>Save the place</button>
+            <button onClick={handleSave} className={saved?'bg-indigo-300 min-[450px]:p-4 p-2':'bg-white min-[450px]:p-4 p-2'}>{saved?"Place Saved":"Save the place"}</button>
           </div>
         </div>
         </div>
