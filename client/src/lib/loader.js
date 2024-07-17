@@ -30,12 +30,8 @@ export const profilePageLoader = async() =>{
     try{
     const savedPosts = await apiRequest.get('/users/saved');
     const createdPosts = await apiRequest.get('/users/posts');
-    if(createdPosts?.data?.data && savedPosts?.data?.data)
-    return { posts: createdPosts.data.data,saved: savedPosts.data.data}
-    if(createdPosts?.data?.data)
-    return {posts:createdPosts.data.data, saved:null}
-    if(savedPosts?.data?.data)
-    return {posts:null, saved:savedPosts.data.data}
+    const chats = await apiRequest.get('/chats')
+    return {posts: createdPosts?.data?.data || null, saved: savedPosts?.data?.data || null, chats: chats?.data?.data || null};
     
 
     }
