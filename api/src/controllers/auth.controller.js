@@ -79,7 +79,8 @@ const loginUser = asyncHandler(async(req,res)=>{
         expiresIn:'30d'
     });
     const options = {
-        httpOnly:true
+        httpOnly:true,
+        maxAge: 30 * 24 * 60 * 60 * 1000
     }
     const loggedInUser = exclude(user,['password']);
     res.status(200).cookie("token",token,options).json(

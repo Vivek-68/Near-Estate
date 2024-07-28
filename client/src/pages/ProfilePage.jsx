@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { userData, listData } from "../lib/dummydata.js";
 import Card from "../components/Card";
 import Chat from "../components/Chat.jsx";
@@ -17,6 +17,10 @@ const ProfilePage = () => {
   const [text,setText] = useState('');
   const {socket} = useContext(SocketContext);
   const navigate = useNavigate();
+  const endMessageRef = useRef()
+  useEffect(()=>{
+    endMessageRef.current?.scrollIntoView({behavior: "smooth"})
+  },[chat])
   const { currentUser, updateUser } = useContext(AuthContext);
   const handleClick = async () => {
     try {
@@ -62,9 +66,10 @@ const ProfilePage = () => {
         console.log(err);
       }
     };
-
+  
     if (chat && socket) {
       socket.on("getMessage", (data) => {
+        
         if (chat.id === data.chatId) {
           setChat((prev) => ({ ...prev, messages: [...prev.messages, data] }));
           read();
@@ -230,6 +235,7 @@ const ProfilePage = () => {
                       </div>
                     );
                 })}
+                <div ref={endMessageRef}></div>
             </div>
     
             <div className="flex mt-2">
